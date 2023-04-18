@@ -1,0 +1,32 @@
+.App {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.audio-control-btn{
+  cursor: pointer;
+}
+.song-item{
+  border: 1px solid gray;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  height: 25px;
+  margin-bottom: 2px;
+}
+.song-item .song-title{
+  margin-left: 5px;
+}
+.song-item .audio-control-btn{
+  margin-left: 5px;
+}
+
+
+.audio-controller .audio-control-btn {
+  width: 30px;
+  height: 30px;
+}
+
+.record-btn{
+
+}

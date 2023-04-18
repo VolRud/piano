@@ -1,38 +1,21 @@
-# Piano Recording Task
+# piano-app
 
-This repository contains the instruction and codebase for an interview task at [flowkey](https://www.flowkey.com).
+This is a minimal piano-app based on [Create React App](https://github.com/facebook/create-react-app) and [react-piano](https://github.com/kevinsqi/react-piano).
 
-*If anything here is unclear or any questions come to your mind, don’t hesitate to contact us - we’re here to help you!*
+## How to run
 
-## Task Instructions
+- `npm install`
+- `npm start`
 
-1. Please copy this codebase to a private repo on your Github account by clicking [Use this template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) on GitHub, or by cloning it manually (don't create a fork!)
+## Linting
 
-2. Add a Pull Request (to merge your changes to `main` of your copy, not this repository!) implementing the following functionality:
-**Allow users of the app to record a sequence of keys played on the Piano UI as a "Song" and replay it.**<br>
-*Please ensure the PR has a clear description explaining the change. You can add screenshots for the reviewer to get a better first impression of the UI.*
+This repo contains a basic linting setup using [eslint](https://eslint.org/) and [prettier](https://prettier.io/).
+You can setup your editor to show (and auto-fix on save) linting errors, e.g. using the [VS Code ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
 
-### Implementation guidelines
-- Focus on **clean, readable code** and **simplicity**
-- The review will focus on the structure of the React code, and the recording/playback solution you use (storing the recordings in an appropriate data structure will help a lot).
-- Use the [server](server) to store and retrieve songs (here the docs for client-side [Queries](https://www.apollographql.com/docs/react/essentials/queries/) & [Mutations](https://www.apollographql.com/docs/react/essentials/mutations/))
-- Continue to use `npm` as package manager, don't switch to `yarn`
+You can also run:
+- `npm run eslint` to show linting errors
+- `npm run eslint-fix` to auto-fix linting errors
 
-### Product requirements
-- Provide a button to start/stop recording a sequence of keys played on the Piano UI
-- Define a song title when storing a song on stop recording
-- Show a list of stored songs with title
-- Enable replaying stored songs with a small play button next to the title (with correct timing of replayed keys!)
+## React Apollo
 
-Here a very simple example of what the UI could look like:
-<img width="735" alt="image" src="https://user-images.githubusercontent.com/10008938/61955349-1ce49b80-afbb-11e9-810d-108d27c25a2a.png">
-
-*IMPORTANT: It does not have to look like this, that's just an example!*
-
-## Provided Codebase
-
-The codebase consists of:
-- a minimal React [client](client) based on the [react-piano](https://github.com/kevinsqi/react-piano) package
-- a [server](server) based on [Apollo](https://www.apollographql.com/)
-
-Basic infos and how to run instructions for both parts can be found in the according READMEs in each directory.
+The app contains a base configuration for `react-apollo` to use [Queries](https://www.apollographql.com/docs/react/essentials/queries/) and [Mutations](https://www.apollographql.com/docs/react/essentials/mutations/).
