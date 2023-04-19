@@ -4,7 +4,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface ISongsState {
     songs: ISong[];
-    songsIsLoaded: boolean;
 
     mode: "RECORD" | "PAUSE" | "PLAYING" | "IDLE";
     titleOfrecordableSong: string;
@@ -20,7 +19,6 @@ export interface ISongsState {
 
 const initialState: ISongsState = {
     songs: [],
-    songsIsLoaded: false,
 
     mode: "IDLE",
     titleOfrecordableSong: "",
@@ -39,7 +37,7 @@ export const songsSlice = createSlice({
     name: "songs",
     initialState,
     reducers: {
-        onGettingSongs: (state: ISongsState, action: PayloadAction<ISong[]>) => {
+        addLoadedSongsToStore: (state: ISongsState, action: PayloadAction<ISong[]>) => {
             state.songs = [...action.payload];
         },
         addNewSong: (state: ISongsState, action: PayloadAction<ISong>) => {
@@ -49,6 +47,14 @@ export const songsSlice = createSlice({
             state.mode = "PLAYING";
             state.currentSong = action.payload.keyStrokes;
             state.currentSongId = action.payload._id;
+        },
+        playNote: (state: ISongsState, action: PayloadAction<number>) => {
+            state.currentNoteIndex = action.payload;
+            state.currentNote = state.currentSong[action.payload];
+        },
+        playNextNote: (state: ISongsState) => {
+            state.currentNoteIndex = state.currentNoteIndex + 1;
+            state.currentNote = state.currentSong[state.currentNoteIndex + 1];
         },
         stopSong: (state: ISongsState) => {
             state.currentSong = [];
@@ -69,18 +75,10 @@ export const songsSlice = createSlice({
         recordNote: (state: ISongsState, action: PayloadAction<number>) => {
             state.recordableSong = [...state.recordableSong, action.payload];
         },
-        playNote: (state: ISongsState, action: PayloadAction<number>) => {
-            if (state.mode === "RECORD" || state.mode === "PLAYING") {
-                state.currentNoteIndex = action.payload;
-                state.currentNote = state.currentSong[action.payload];
-            }
-            if (state.mode === "RECORD") {
-                state.recordableSong = [...state.recordableSong, action.payload];
-            }
-        },
-        playNextNote: (state: ISongsState) => {
-            state.currentNoteIndex = state.currentNoteIndex + 1;
-            state.currentNote = state.currentSong[state.currentNoteIndex + 1];
+        cancelRecordedSong: (state: ISongsState) => {
+            state.mode = "IDLE";
+            state.titleOfrecordableSong = "";
+            state.recordableSong = [];
         },
         setPianoAccess: (state: ISongsState, action: PayloadAction<boolean>) => {
             state.isPianoAcceseble = action.payload;
@@ -122,7 +120,6 @@ export const playSongThunk = (song: ISong): AppThunk => {
             clearTimeout(timerID);
             return;
         };
-
         playNextNotes(currentNoteIndex + 1);
     };
 };
@@ -130,17 +127,18 @@ export const playSongThunk = (song: ISong): AppThunk => {
 export const selectSongs = (state: RootState) => state;
 
 export const {
-    onGettingSongs,
+    addLoadedSongsToStore,
     addNewSong,
     setPianoAccess,
+    playNote,
+    playNextNote,
     setPlayingSong,
     stopSong,
     pauseSong,
     startRecording,
     stopRecording,
-    playNote,
-    playNextNote,
     recordNote,
+    cancelRecordedSong,
 } = songsSlice.actions;
 
 export default songsSlice.reducer;

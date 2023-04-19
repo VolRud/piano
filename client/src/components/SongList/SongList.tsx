@@ -3,7 +3,7 @@ import { GET_SONGS } from "../../graphql";
 import { useSongQuery } from "../../useRequest";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { SongItem } from "./SongItem";
-import { onGettingSongs, selectSongs } from "../../store/songs/songs";
+import { addLoadedSongsToStore, selectSongs } from "../../store/songs/songs";
 
 type SongListProps = {
     children?: JSX.Element;
@@ -18,7 +18,7 @@ export const SongList: FunctionComponent<SongListProps> = ({ children }) => {
     const { loading, error, data } = useSongQuery(GET_SONGS);
     useEffect(() => {
         if (!error && !loading && data?.songs) {
-            dispatch(onGettingSongs(data.songs));
+            dispatch(addLoadedSongsToStore(data.songs));
         }
     }, [data]);
     return (
