@@ -105,9 +105,7 @@ export const playSongThunk = (song: ISong): AppThunk => {
 
                 if (isLastNoteofSong || mode === "PAUSE") {
                     stopPlay(timerID);
-                    if (isLastNoteofSong) {
-                        dispatch(stopSong());
-                    }
+                    isLastNoteofSong && dispatch(stopSong());
                     return;
                 } else {
                     dispatch(playNote(noteIndex));
