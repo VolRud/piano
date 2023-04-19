@@ -5,11 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { SongItem } from "./SongItem";
 import { addLoadedSongsToStore, selectSongs } from "../../store/songs/songs";
 
-type SongListProps = {
-    children?: JSX.Element;
-};
-
-export const SongList: FunctionComponent<SongListProps> = ({ children }) => {
+export const SongList: FunctionComponent = () => {
     const dispatch = useAppDispatch();
     const state = useAppSelector(selectSongs);
     const {
@@ -29,7 +25,6 @@ export const SongList: FunctionComponent<SongListProps> = ({ children }) => {
                 songs.map((song) => {
                     return <SongItem song={song} key={song._id} />;
                 })}
-            {children}
         </div>
     );
 };
