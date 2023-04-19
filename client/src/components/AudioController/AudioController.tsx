@@ -1,24 +1,20 @@
 import React, { FunctionComponent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
-    addNewSong,
     selectSongs,
-    setPianoVisibility,
+    setPianoAccess,
     startRecording,
     stopRecording,
 } from "../../store/songs/songs";
-import { useSongsMutation } from "../../useRequest";
-import { ADD_SONG } from "../../graphql";
+import { SaveSongModal } from "./SaveSongModal";
 
 export const AudioController: FunctionComponent = () => {
-    const [inputVisibility, setInputVisibility] = useState(false);
-    const [songTitle, setSongTitle] = useState("");
-    const [addSong] = useSongsMutation(ADD_SONG);
+    const [isModalShown, setModalShown] = useState(false);
 
     const dispatch = useAppDispatch();
     const state = useAppSelector(selectSongs);
     const {
-        songs: { mode, recordableSong },
+        songs: { mode },
     } = state;
 
     const onRecord = () => {
@@ -27,51 +23,31 @@ export const AudioController: FunctionComponent = () => {
 
     const onRecordStop = () => {
         dispatch(stopRecording());
-        setInputVisibility(true);
-        dispatch(setPianoVisibility(false));
+        dispatch(setPianoAccess(false));
+        setModalShown(true);
     };
-    const saveNewSong = () => {
-        if (recordableSong.length === 0) {
-            alert("This song is empty");
-        } else {
-            addSong({
-                variables: {
-                    title: songTitle,
-                    keyStrokes: recordableSong,
-                },
-            }).then(({ data }) => {
-                const newSong = data?.addSong;
-                if (newSong) {
-                    const fakeId = Date();
-                    // Server returns new song objects without ID.
-                    // Fix the server
-                    dispatch(addNewSong({ ...newSong, _id: fakeId }));
-                }
-            });
-        }
-        setInputVisibility(false);
-        dispatch(setPianoVisibility(true));
-    };
-    const changeSongTitle = (e: React.FormEvent<HTMLInputElement>) => {
-        setSongTitle(e.currentTarget.value);
+    const hamdleCloseModal = () => {
+        setModalShown(false);
+        dispatch(setPianoAccess(true));
     };
     return (
         <div className="audio-controller">
-            {mode === "RECORD" && !inputVisibility && (
-                <div className="audio-control-btn record-btn" onClick={onRecordStop}>
-                    <i className="bi bi-stop-circle"></i>
-                </div>
+            <SaveSongModal show={isModalShown} closeModal={hamdleCloseModal} />
+            {mode === "RECORD" && (
+                <>
+                    <div className="audio-control-btn record-btn" onClick={onRecordStop}>
+                        <i className="bi bi-stop-circle"></i>
+                    </div>
+                    <div>Stop and save</div>
+                </>
             )}
-            {!inputVisibility && mode === "IDLE" && (
-                <div className="audio-control-btn" onClick={onRecord}>
-                    <i className="bi bi-record-circle"></i>
-                </div>
-            )}
-            {inputVisibility && (
-                <div>
-                    <input type="text" onChange={changeSongTitle} />
-                    {songTitle.length !== 0 && <button onClick={saveNewSong}>SAVE SONG</button>}
-                </div>
+            {mode === "IDLE" && (
+                <>
+                    <div className="audio-control-btn" onClick={onRecord}>
+                        <i className="bi bi-record-circle"></i>
+                    </div>
+                    <span>Record</span>
+                </>
             )}
         </div>
     );

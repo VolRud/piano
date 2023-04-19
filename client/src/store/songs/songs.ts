@@ -15,7 +15,7 @@ export interface ISongsState {
     currentNote: number;
     currentNoteIndex: number;
 
-    isPianoVisible: boolean;
+    isPianoAcceseble: boolean;
 }
 
 const initialState: ISongsState = {
@@ -32,7 +32,7 @@ const initialState: ISongsState = {
     currentNote: 0,
     currentNoteIndex: 0,
 
-    isPianoVisible: true,
+    isPianoAcceseble: true,
 };
 
 export const songsSlice = createSlice({
@@ -55,6 +55,7 @@ export const songsSlice = createSlice({
             state.currentSongId = "";
             state.currentNote = 0;
             state.currentNoteIndex = 0;
+            state.mode = "IDLE";
         },
         pauseSong: (state: ISongsState) => {
             state.mode = "PAUSE";
@@ -81,8 +82,8 @@ export const songsSlice = createSlice({
             state.currentNoteIndex = state.currentNoteIndex + 1;
             state.currentNote = state.currentSong[state.currentNoteIndex + 1];
         },
-        setPianoVisibility: (state: ISongsState, action: PayloadAction<boolean>) => {
-            state.isPianoVisible = action.payload;
+        setPianoAccess: (state: ISongsState, action: PayloadAction<boolean>) => {
+            state.isPianoAcceseble = action.payload;
         },
     },
 });
@@ -131,7 +132,7 @@ export const selectSongs = (state: RootState) => state;
 export const {
     onGettingSongs,
     addNewSong,
-    setPianoVisibility,
+    setPianoAccess,
     setPlayingSong,
     stopSong,
     pauseSong,

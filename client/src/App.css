@@ -22,11 +22,18 @@
 }
 
 
-.audio-controller .audio-control-btn {
-  width: 30px;
-  height: 30px;
+.audio-controller{
+  border: 2px solid gray;
+  width: 100%;
+  height: 60px;
+  text-align: center;
+  font-size: 12px;
+  margin-bottom: 10px;
 }
-
-.record-btn{
-
+.audio-controller .audio-control-btn {
+  width: 100%;
+  text-align: center;
+  font-size: 25px;
+  font-weight: 800;
+  color: red;
 }

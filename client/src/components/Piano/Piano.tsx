@@ -20,7 +20,7 @@ function Piano({ onPlayNote, onStopNote }: { onPlayNote: NoteFunction; onStopNot
     const dispatch = useDispatch();
     const state = useAppSelector(selectSongs);
     const {
-        songs: { currentNote, mode, isPianoVisible },
+        songs: { currentNote, mode, isPianoAcceseble },
     } = state;
 
     const onKeyStroke = (midiNumber: number) => {
@@ -34,9 +34,10 @@ function Piano({ onPlayNote, onStopNote }: { onPlayNote: NoteFunction; onStopNot
         }
     };
 
-    return isPianoVisible ? (
+    return (
         <div>
             <ReactPiano
+                disabled={!isPianoAcceseble}
                 activeNotes={[currentNote]}
                 noteRange={noteRange}
                 playNote={onKeyStroke}
@@ -45,7 +46,7 @@ function Piano({ onPlayNote, onStopNote }: { onPlayNote: NoteFunction; onStopNot
                 keyboardShortcuts={keyboardShortcuts}
             />
         </div>
-    ) : null;
+    );
 }
 
 export default Piano;
