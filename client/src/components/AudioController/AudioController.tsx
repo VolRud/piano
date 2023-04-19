@@ -6,7 +6,7 @@ import {
     startRecording,
     stopRecording,
 } from "../../store/songs/songs";
-import { SaveSongModal } from "./SaveSongModal";
+import { SaveSongModal } from "./";
 
 export const AudioController: FunctionComponent = () => {
     const [isModalShown, setModalShown] = useState(false);

@@ -3,8 +3,8 @@ import "./App.css";
 import Instrument from "./instrument";
 import Piano from "./components/Piano/Piano";
 
-import { SongList } from "./components/SongList/SongList";
-import { AudioController } from "./components/AudioController/AudioController";
+import { SongList } from "./components/SongList";
+import { AudioController } from "./components/AudioController";
 
 function App({ instrument }: { instrument: Instrument }) {
     return (

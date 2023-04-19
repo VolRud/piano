@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect } from "react";
 import { GET_SONGS } from "../../graphql";
 import { useSongQuery } from "../../useRequest";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { SongItem } from "./SongItem";
+import { SongItem } from "./";
 import { addLoadedSongsToStore, selectSongs } from "../../store/songs/songs";
 
 export const SongList: FunctionComponent = () => {
