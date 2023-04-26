@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { addNewSong, cancelRecordedSong, selectSongs } from "../../store/songs/songs";
+import { addNewSong, cleanlRecordedSong, selectSongs } from "../../store/songs/songs";
 import { useSongsMutation } from "../../useRequest";
 import { ADD_SONG } from "../../graphql";
 
@@ -40,6 +40,7 @@ export const SaveSongModal: FunctionComponent<SaveSongModalProps> = ({ show, clo
                     dispatch(addNewSong({ ...newSong, _id: fakeId }));
                 }
             });
+            dispatch(cleanlRecordedSong());
             closeModal();
         }
     };
@@ -48,11 +49,11 @@ export const SaveSongModal: FunctionComponent<SaveSongModalProps> = ({ show, clo
         setSongTitle(e.currentTarget.value);
     };
     const cancelSavingSong = () => {
-        dispatch(cancelRecordedSong());
+        dispatch(cleanlRecordedSong());
         closeModal();
     };
     return (
-        <Modal show={show} onHide={closeModal}>
+        <Modal show={show} onHide={cancelSavingSong}>
             <Modal.Header closeButton>
                 <Modal.Title>Saving a new song</Modal.Title>
             </Modal.Header>

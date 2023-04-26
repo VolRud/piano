@@ -42,6 +42,8 @@ export const songsSlice = createSlice({
         },
         addNewSong: (state: ISongsState, action: PayloadAction<ISong>) => {
             state.songs = [...state.songs, action.payload];
+            state.recordableSong = [];
+            state.mode = "IDLE";
         },
         setPlayingSong: (state: ISongsState, action: PayloadAction<ISong>) => {
             state.mode = "PLAYING";
@@ -75,7 +77,7 @@ export const songsSlice = createSlice({
         recordNote: (state: ISongsState, action: PayloadAction<number>) => {
             state.recordableSong = [...state.recordableSong, action.payload];
         },
-        cancelRecordedSong: (state: ISongsState) => {
+        cleanlRecordedSong: (state: ISongsState) => {
             state.mode = "IDLE";
             state.titleOfrecordableSong = "";
             state.recordableSong = [];
@@ -136,7 +138,7 @@ export const {
     startRecording,
     stopRecording,
     recordNote,
-    cancelRecordedSong,
+    cleanlRecordedSong,
 } = songsSlice.actions;
 
 export default songsSlice.reducer;
